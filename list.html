@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Статьи - Мой сайт{% endblock %}
+
+{% block extra_css %}
+<style>
+    .post {
+        background: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+    .post h3 {
+        margin-bottom: 15px;
+        font-size: 24px;
+        color: #111;
+    }
+    .post-content {
+        margin: 15px 0;
+        color: #444;
+    }
+    .post small {
+        color: #888;
+        font-size: 13px;
+        display: block;
+        margin-top: 15px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <h2>Последние публикации</h2>
+    <div style="margin-top: 20px;">
+        {% for article in articles %}
+            <article class="post">
+                <h3>{{ article.title }}</h3>
+
+                {% if article.image %}
+                    <img
+                        src="{{ article.image.url }}"
+                        alt="{{ article.title }}"
+                        style="display: block; width: 100%; max-width: 100%; height: auto; border-radius: 8px;"
+                    >
+                {% endif %}
+
+                <div class="post-content">
+                    {{ article.content|linebreaks }}
+                </div>
+
+                <small>Автор: {{ article.author }} | Опубликовано: {{ article.created_at|date:"d.m.Y H:i" }}</small>
+            </article>
+        {% empty %}
+            <p style="color: #666; text-align: center; margin-top: 40px;">Пока нет статей.</p>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+
